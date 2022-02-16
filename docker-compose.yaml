@@ -1,0 +1,24 @@
+version: "3"
+services:
+  example-go:
+    container_name: example-go
+    build: .
+    ports:
+      - "8081:8081"
+    networks:
+      - default
+      - app_net
+    volumes:
+      - /home/configs:/app/configs
+      - /home/logs:/app/logs
+    depends_on:
+      - db
+  db:
+    image: mysql/mysql-server:latest
+    hostname: user-db
+    environment:
+      MYSQL_DATABASE: blog
+      MYSQL_ROOT_PASSWORD: 123456789
+
+networks:
+  app_net:
